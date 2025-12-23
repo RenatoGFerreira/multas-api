@@ -1,3 +1,4 @@
+
 import { InfractionRepository } from "./infractions.repository";
 
 export class InfractionService{
@@ -6,10 +7,10 @@ export class InfractionService{
     ) {}
 
     async list(page = 1, limit = 10) {
-        const [data, total] = await Promise.all([
-          this.repository.findAll(page, limit),
-          this.repository.count()
-        ]);
+      const [data, total] = await Promise.all([
+        this.repository.findAll(page, limit),
+        this.repository.count()
+      ]);
     
         return {
           data,

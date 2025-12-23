@@ -36,6 +36,55 @@ async function main() {
       fineAmount: 2934.70,
       autoSuspend: true,
     },
+    {
+      code: 'RED',
+      description: 'Avançar Sinal Vermelho',
+      severity: InfractionSeverity.GRAVISSIMA,
+      points: 7,
+      fineAmount: 293.47,
+      autoSuspend: false,
+    },
+    {
+      code: 'CEL',
+      description: 'Uso de celular ao volante',
+      severity: InfractionSeverity.MEDIA,
+      points: 4,
+      fineAmount: 130.16,
+      autoSuspend: false,
+    },
+    {
+      code: 'SEAT',
+      description: 'Não usar cinto de segurança',
+      severity: InfractionSeverity.GRAVE,
+      points: 5,
+      fineAmount: 195.23,
+      autoSuspend: false
+    },
+    {
+      code: 'HELM',
+      description: 'Conduzir motocicleta sem capacete',
+      severity: InfractionSeverity.GRAVISSIMA,
+      points: 7,
+      fineAmount: 293.47,
+      autoSuspend: false,
+    },
+    {
+      code: 'PARK',
+      description: 'Estacionamento irregular',
+      severity: InfractionSeverity.LEVE,
+      points: 3,
+      fineAmount: 88.38,
+      autoSuspend: false,
+    },
+    {
+      code: 'LIGHT',
+      description: 'Trafegar com farol desligado durante a noite',
+      severity: InfractionSeverity.LEVE,
+      points: 3,
+      fineAmount: 88.38,
+      autoSuspend: false,
+    },
+    
   ];
 
   for (const infraction of infractions) {
