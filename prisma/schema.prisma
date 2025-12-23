@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum InfractionSeverity {
+  LEVE
+  MEDIA
+  GRAVE
+  GRAVISSIMA
+}
+
+model InfractionType {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  description String
+  severity    InfractionSeverity
+  points      Int
+  fineAmount  Decimal
+  autoSuspend Boolean  @default(false)
+
+  fines       Fine[]
+}
+
+
+model Fine {
+  id               String   @id @default(uuid())
+  infractionTypeId String
+  occurredAt       DateTime
+  paid             Boolean  @default(false)
+
+  infractionType   InfractionType @relation(fields: [infractionTypeId], references: [id])
+
+  createdAt        DateTime @default(now())
+}

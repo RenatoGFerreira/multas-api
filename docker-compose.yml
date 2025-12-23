@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: cnh_postgres
+    ports:
+      - "55432:5432"
+    environment:
+      POSTGRES_DB: cnh_db
+      POSTGRES_USER: cnh_user
+      POSTGRES_PASSWORD: cnh_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
