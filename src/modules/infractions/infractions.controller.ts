@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import { InfractionService } from "./infractions.service";
+import { ListInfractionQuery } from "./infractions.schema";
 
 const service = new InfractionService();
 
 export class InfractionController {
-  async list(req: Request, res: Response) {
-    const { page, limit } = req.validatedQuery!;
-
-    const result = await service.list(page, limit);
-    return res.json(result);
+  async list(req: Request<{},{}, ListInfractionQuery>, res: Response) {
+    const infractions = await service.list(req.validatedQuery);
+    return res.status(200).json(infractions);
   }
 }

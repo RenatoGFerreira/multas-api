@@ -47,5 +47,4 @@ describe("GET /api/infraction-types", () => {
     expect(response.status).toBe(400);
   });
   
-  
 });
