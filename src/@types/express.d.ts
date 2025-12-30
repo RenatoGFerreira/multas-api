@@ -10,5 +10,12 @@ declare global {
     }
   }
 }
+declare module "express-serve-static-core" {
+  interface Request {
+    validatedBody?: any;
+    validatedQuery?: any;
+  }
+}
+
 
 export {};

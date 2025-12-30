@@ -20,20 +20,42 @@ model InfractionType {
   description String
   severity    InfractionSeverity
   points      Int
-  fineAmount  Decimal
+  fineAmount  Decimal @db.Decimal(10,2)
   autoSuspend Boolean  @default(false)
 
   fines       Fine[]
-}
 
+  @@map("infraction_types")
+}
 
 model Fine {
   id               String   @id @default(uuid())
   infractionTypeId String
+  automobileId     String
+
   occurredAt       DateTime
   paid             Boolean  @default(false)
 
   infractionType   InfractionType @relation(fields: [infractionTypeId], references: [id])
+  automobile       Automobile   @relation(fields: [automobileId], references: [id])
 
   createdAt        DateTime @default(now())
+
+  @@map("fines")
+}
+
+model Automobile {
+  id               String   @id @default(uuid())
+  plate            String   @unique
+  brand            String
+  model            String 
+  year             Int
+  color            String?
+
+  isActive         Boolean  @default(true)
+  fines            Fine[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("automobiles")
 }

@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { InfractionController } from "./infractions.controller";
 import { validateQuery } from "../../shared/middleware/validate";
-import { listInfractionQuerySchema } from "./dto/list-infraction.dto";
+import { listInfractionQuerySchema } from "./infractions.schema";
+
 
 const routes = Router();
 const controller = new InfractionController();
