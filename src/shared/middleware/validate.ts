@@ -4,7 +4,6 @@ import { ZodType } from "zod";
 export function validateQuery<T>(schema: ZodType<T>) {
   return (req: Request, res: Response, next: NextFunction) => {
     const result = schema.safeParse(req.query);
-
     if (!result.success) {
       return res.status(400).json({
         message: "Invalid query parameters",
@@ -29,6 +28,22 @@ export function validateBody<T>(schema: ZodType<T>) {
     }
 
     req.validatedBody = result.data;
+    next();
+  };
+}
+
+export function validateParams<T>(schema: ZodType<T>) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const result = schema.safeParse(req.params);
+    
+    if (!result.success) {
+      return res.status(400).json({
+        message: "Invalid request params",
+        errors: result.error.flatten().fieldErrors,
+      });
+    }
+
+    req.validatedParams = result.data;
     next();
   };
 }

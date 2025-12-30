@@ -7,7 +7,15 @@ export const createAutomobileSchema = z.object({
   year: z.coerce.number().int().min(1900),
   color: z.string().min(3).optional(),
 });
+export type CreateAutomobileInput = z.infer<typeof createAutomobileSchema>;
 
-export type CreateAutomobileInput = z.infer<
-  typeof createAutomobileSchema
->;
+export const listAutomobileQuerySchema = z.object({
+  page: z.coerce.number().min(1).default(1),
+  limit: z.coerce.number().min(1).max(100).default(10),
+});
+export type ListAutomobileQuery = z.infer<typeof listAutomobileQuerySchema>;
+
+export const getAutomobilePlateSchema = z.object({
+  plate: z.string().min(6).max(8),
+});
+export type GetAutomobilePlateInput = z.infer<typeof getAutomobilePlateSchema>;
