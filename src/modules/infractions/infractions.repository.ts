@@ -1,12 +1,11 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma as prismaInstance } from "../../shared/database/prisma";
 import { ListInfractionQuery } from "./infractions.schema";
 
-const prisma = new PrismaClient();
-
 export class InfractionRepository {
-  async findAll(query: ListInfractionQuery) {
-    const {page, limit} = query
-    return prisma.infractionType.findMany({
+  constructor(private readonly prisma = prismaInstance) {}
+
+  async findAll({ page, limit }: ListInfractionQuery) {
+    return await this.prisma.infractionType.findMany({
       skip: (page - 1) * limit,
       take: limit,
       orderBy: { code: "asc" }
@@ -14,6 +13,6 @@ export class InfractionRepository {
   }
 
   async count() {
-    return prisma.infractionType.count();
+    return await this.prisma.infractionType.count();
   }
 }

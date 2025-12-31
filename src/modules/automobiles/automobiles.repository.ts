@@ -1,14 +1,17 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+
+import { prisma as prismaInstance } from "../../shared/database/prisma"; 
+import { Prisma } from "@prisma/client";
 import {
   CreateAutomobileInput,
   ListAutomobileQuery,
   GetAutomobilePlateInput,
+  GetAutomobileIdInput,
 } from "./automobiles.schema";
-import { DuplicatePlateError,  } from "./errors/duplicate-plate.error";
+import { DuplicatePlateError } from "./errors/duplicate-plate.error";
 import { InexistAutomobileError } from "./errors/inexist-automobile.error";
 
 export class AutomobileRepository {
-  constructor(private prisma = new PrismaClient()) {}
+  constructor(private readonly prisma = prismaInstance) {}
 
   async findAll(query: ListAutomobileQuery) {
     const { page, limit } = query;
@@ -38,8 +41,19 @@ export class AutomobileRepository {
   }
 
   async findByPlate(data: GetAutomobilePlateInput) {
-    const automobile = await this.prisma.automobile.findUnique({ where: { plate: data.plate } });
-    if(!automobile) throw new InexistAutomobileError()
+    const automobile = await this.prisma.automobile.findUnique({ 
+      where: { plate: data.plate } 
+    });
+    
+    if (!automobile) throw new InexistAutomobileError();
+    return automobile;
+  }
+
+  async findById(id: GetAutomobileIdInput){
+    const automobile = await this.prisma.automobile.findUnique({
+      where: {id: id.id}
+    })
+    if(!automobile) throw new InexistAutomobileError();
     return automobile;
   }
 }

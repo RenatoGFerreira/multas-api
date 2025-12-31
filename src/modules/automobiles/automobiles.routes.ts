@@ -9,16 +9,19 @@ import {
   createAutomobileSchema,
   listAutomobileQuerySchema,
   getAutomobilePlateSchema,
+  getAutomobileIdSchema
 } from "./automobiles.schema";
 
 const routes = Router();
 const controller = new AutomobileController();
 
-routes.post("/", validateBody(createAutomobileSchema), controller.create);
 routes.get("/", validateQuery(listAutomobileQuerySchema), controller.list);
+routes.get("/:id", validateParams(getAutomobileIdSchema), controller.getById)
 routes.get(
-  "/:plate",
+  "/by-plate/:plate",
   validateParams(getAutomobilePlateSchema),
   controller.getByPlate
 );
+routes.post("/", validateBody(createAutomobileSchema), controller.create);
+
 export default routes;

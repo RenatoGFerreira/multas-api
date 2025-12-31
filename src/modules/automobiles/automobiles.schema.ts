@@ -19,3 +19,8 @@ export const getAutomobilePlateSchema = z.object({
   plate: z.string().min(6).max(8),
 });
 export type GetAutomobilePlateInput = z.infer<typeof getAutomobilePlateSchema>;
+
+export const getAutomobileIdSchema = z.object({
+  id: z.string()
+})
+export type GetAutomobileIdInput = z.infer<typeof getAutomobileIdSchema>;
