@@ -4,8 +4,11 @@ import {
   GetAutomobileIdInput,
   GetAutomobilePlateInput,
   ListAutomobileQuery,
+  DeactivateAutomobileInput
 } from "./automobiles.schema";
 import { InvalidAutomobileYearError } from "./errors/invalid-year.error";
+import { AutomobileDeactivated } from "./errors/automobile-deactivate";
+
 export class AutomobileService {
   constructor(private repository = new AutomobileRepository()) {}
   async list(query: ListAutomobileQuery) {
@@ -41,4 +44,15 @@ export class AutomobileService {
   async getById(id: GetAutomobileIdInput) {
     return this.repository.findById(id);
   }
+
+  async deactivate(data: DeactivateAutomobileInput) {
+    const automobile = await this.repository.findById(data);
+  
+    if (!automobile.isActive) {
+      throw new AutomobileDeactivated();
+    }
+  
+    await this.repository.deactivate(data.id);
+  }
+  
 }

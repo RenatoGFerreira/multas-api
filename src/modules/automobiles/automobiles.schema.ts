@@ -21,6 +21,13 @@ export const getAutomobilePlateSchema = z.object({
 export type GetAutomobilePlateInput = z.infer<typeof getAutomobilePlateSchema>;
 
 export const getAutomobileIdSchema = z.object({
-  id: z.string()
+  id: z.string().uuid(),
 })
 export type GetAutomobileIdInput = z.infer<typeof getAutomobileIdSchema>;
+
+export const deactivateAutomobileSchema = z.object({
+  id: z.string().uuid(),
+});
+export type DeactivateAutomobileInput = z.infer<
+  typeof deactivateAutomobileSchema
+>;

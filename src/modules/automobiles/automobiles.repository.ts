@@ -15,7 +15,8 @@ export class AutomobileRepository {
 
   async findAll(query: ListAutomobileQuery) {
     const { page, limit } = query;
-    return await this.prisma.automobile.findMany({
+    return this.prisma.automobile.findMany({
+      where: { isActive: true },
       skip: (page - 1) * limit,
       take: limit,
       orderBy: { brand: "asc" },
@@ -23,7 +24,11 @@ export class AutomobileRepository {
   }
 
   async count() {
-    return this.prisma.automobile.count();
+    return this.prisma.automobile.count({
+      where: {
+        isActive: true
+      }
+    });
   }
 
   async create(data: CreateAutomobileInput) {
@@ -55,5 +60,12 @@ export class AutomobileRepository {
     })
     if(!automobile) throw new InexistAutomobileError();
     return automobile;
+  }
+
+  async deactivate(id: string) {
+    await this.prisma.automobile.update({
+      where: { id },
+      data: { isActive: false },
+    });
   }
 }

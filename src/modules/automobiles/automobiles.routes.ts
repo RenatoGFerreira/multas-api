@@ -9,7 +9,8 @@ import {
   createAutomobileSchema,
   listAutomobileQuerySchema,
   getAutomobilePlateSchema,
-  getAutomobileIdSchema
+  getAutomobileIdSchema,
+  deactivateAutomobileSchema
 } from "./automobiles.schema";
 
 const routes = Router();
@@ -23,5 +24,10 @@ routes.get(
   controller.getByPlate
 );
 routes.post("/", validateBody(createAutomobileSchema), controller.create);
+routes.patch(
+  "/:id",
+  validateParams(deactivateAutomobileSchema),
+  controller.deactivate
+);
 
 export default routes;

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { AutomobileService } from "./automobiles.service";
+import { DeactivateAutomobileInput } from "./automobiles.schema";
 
 const service = new AutomobileService();
 
@@ -24,4 +25,13 @@ export class AutomobileController {
     const automobile = await service.getById(req.validatedParams);
     return res.status(200).json(automobile);
   }
+
+  async deactivate(
+    req: Request<{}, {}, {}, DeactivateAutomobileInput>,
+    res: Response
+  ) {
+    await service.deactivate(req.validatedParams);
+    return res.status(204).send();
+  }
+  
 }
